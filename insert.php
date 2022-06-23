@@ -1,6 +1,10 @@
 <?php
+if ( file_exists( 'db.php' ) ) {
+    require_once 'db.php';
+} else {
+    throw new Exception( 'Update DB config', 1 );
+}
 $info      = json_decode( file_get_contents( 'php://input' ) );
-$cn        = new mysqli( 'localhost', 'root', '', 'node' );
 $name      = $cn->real_escape_string( $info->name );
 $check_in  = date( 'd/m/y', strtotime( $cn->real_escape_string( $info->check_in ) ) );
 $check_out = date( 'd/m/y', strtotime( $cn->real_escape_string( $info->check_out ) ) );
@@ -24,9 +28,8 @@ if ( $btn_name == 'Update' ) {
         } else {
             echo 'Data Not Updated';
         }
-    } catch (\Throwable $th) {
+    } catch ( \Throwable $th ) {
         throw $th;
     }
-    
-    
+
 }

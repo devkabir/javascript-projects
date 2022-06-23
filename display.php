@@ -1,5 +1,9 @@
 <?php
-$cn        = new mysqli( 'localhost', 'root', '', 'node' );
+if (file_exists('db.php')) {
+    require_once 'db.php';
+} else {
+    throw new Exception("Update DB config", 1);
+}
 $output = array();
 $query  = "SELECT * FROM bookings";
 $result = $cn->query( $query );
