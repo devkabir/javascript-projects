@@ -1,4 +1,4 @@
-# Open Source WordPress Projects :tada:
+# Open Source JavaScript Projects :tada:
 All of my open source javascript projects will be hosted here.
 
 ## Contents 
