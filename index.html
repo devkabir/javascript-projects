@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Room Booking System</title>
+    <meta name="author" content="Khyrul Kabir">
+    <meta name="description" content="This is Specialised Single Page Application or Crud Appliction in AngularJS">
+    <meta name="keywords" content="angular,angularjs,spa,single,page,application,mysql,database,complete,crud">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
+</head>
+
+<body>
+    <div class="flex flex-col md:flex-row" ng-app="hotelapp" ng-controller="controller" ng-init="show_data()">
+        <div class="main-content flex-1 bg-gray-100  pb-24 md:pb-5">
+            <div class="bg-blue-800 p-2 shadow text-xl text-white">
+                <h3 class="font-bold pl-2">Room Booking System with AngularJS and MySQL</h3>
+            </div>
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Template Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-lg">
+                        <div class="bg-gray-400 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
+                            <h5 class="font-bold uppercase text-gray-600">Booking Form</h5>
+                        </div>
+                        <div class="p-5">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Customar Name</label>
+                            <input type="text" name="name" ng-model="name"
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <br />
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Booking Date</label>
+                            <input type="datetime-local" name="book" ng-model="check_in"
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <br />
+                            <label class="block text-gray-700 text-sm font-bold mb-2">CheckOut Date</label>
+                            <input type="datetime-local" name="check_out" ng-model="check_out"
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <br />
+                            <label class="block text-gray-700 text-sm font-bold mb-2">NID Number</label>
+                            <input type="number" name="nid" ng-model="nid"
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <br />
+
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Room </label>
+                            <input type="number" name="room" ng-model="room"
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <br />
+
+                            <input type="hidden" ng-model="id">
+                            <input type="submit" name="insert"
+                                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-2"
+                                ng-click="insert()" value="{{btnName}}">
+                        </div>
+                    </div>
+                    <!--/Template Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-2/3 p-3">
+                    <!--Table Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-lg">
+                        <div class="bg-gray-400 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
+                            <h5 class="font-bold uppercase text-gray-600">Record Book</h5>
+                        </div>
+                        <div class="p-5">
+                            <table class="w-full p-5 text-gray-700">
+                                <tr>
+                                    <th class="text-left text-blue-900">S.No</th>
+                                    <th class="text-left text-blue-900">Room</th>
+                                    <th class="text-left text-blue-900">NID</th>
+                                    <th class="text-left text-blue-900">CheckOut Date</th>
+                                    <th class="text-left text-blue-900">Action</th>
+                                </tr>
+                                <tr ng-repeat="x in names">
+                                    <td>{{x.id}}</td>
+                                    <td>{{x.room}}</td>
+                                    <td>{{x.nid}}</td>
+                                    <td>{{x.check_out}}</td>
+                                    <td class="inline-flex w-1">
+                                        <button
+                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                                            ng-click="update_data(x.id, x.name, x.book, x.check_out, x.nid,x.room)">
+                                            <span class="glyphicon glyphicon-edit"></span> Edit
+                                        </button>
+                                        <button
+                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+                                            ng-click="delete_data(x.id )">
+                                            <span class="glyphicon glyphicon-trash"></span> Delete
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/table Card-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const app = angular.module("hotelapp", []);
+        app.controller("controller", function ($scope, $http) {
+            $scope.btnName = "Insert";
+            $scope.insert = function () {
+                if ($scope.name == null) {
+                    Swal.fire('Enter Customer Name');
+                } else if ($scope.check_in == null) {
+                    Swal.fire("Enter booking date");
+                } else if ($scope.nid == null) {
+                    Swal.fire("Enter National Id Number");
+                } else {
+                    $http.post(
+                        "insert.php", {
+                        'name': $scope.name,
+                        'check_in': $scope.check_in,
+                        'nid': $scope.nid,
+                        'check_out': $scope.check_out,
+                        'room': $scope.room,
+                        'btnName': $scope.btnName,
+                        'id': $scope.id
+                    }
+                    ).success(function (data) {
+                        Swal.fire(data);
+                        $scope.name = null;
+                        $scope.check_in = null;
+                        $scope.nid = null;
+                        $scope.check_out = null;
+                        $scope.room = null;
+                        $scope.btnName = "Insert";
+                        $scope.show_data();
+                    });
+                }
+            }
+            $scope.show_data = function () {
+                $http.get("display.php")
+                    .success(function (data) {
+                        $scope.names = data;
+                    });
+            }
+            $scope.update_data = function (id, name, check_in, check_out, nid, room) {
+                $scope.id = id;
+                $scope.name = name;
+                $scope.check_in = check_in;
+                $scope.nid = nid;
+                $scope.check_out = check_out;
+                $scope.room = room;
+                $scope.btnName = "Update";
+            }
+            $scope.delete_data = function (id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    $http.post("delete.php", {
+                        'id': id
+                    })
+                        .success(function (data) {
+                            Swal.fire(data);
+                            $scope.show_data();
+                        });
+                })
+
+            }
+        });
+    </script>
+
+</body>
+
+</html>
